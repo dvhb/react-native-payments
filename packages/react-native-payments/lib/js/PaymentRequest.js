@@ -298,6 +298,7 @@ export default class PaymentRequest {
   _getPlatformDetailsIOS(details: PaymentDetailsIOSRaw): PaymentDetailsIOS {
     const {
       paymentData: serializedPaymentData,
+      paymentMethod,
       paymentToken,
       transactionIdentifier,
     } = details;
@@ -306,6 +307,7 @@ export default class PaymentRequest {
 
     return {
       paymentData: isSimulator ? null : JSON.parse(serializedPaymentData),
+      paymentMethod,
       paymentToken,
       transactionIdentifier,
     };
@@ -338,6 +340,7 @@ export default class PaymentRequest {
   _handleUserAccept(details: {
     transactionIdentifier: string,
     paymentData: string,
+    paymentMethod: Object,
     shippingAddress: Object,
     payerEmail: string,
     paymentToken?: string,

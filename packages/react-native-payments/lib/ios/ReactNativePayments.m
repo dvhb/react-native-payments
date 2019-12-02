@@ -345,7 +345,29 @@ RCT_EXPORT_METHOD(handleDetailsUpdate: (NSDictionary *)details
     NSMutableDictionary *paymentResponse = [[NSMutableDictionary alloc]initWithCapacity:3];
     [paymentResponse setObject:transactionId forKey:@"transactionIdentifier"];
     [paymentResponse setObject:paymentData forKey:@"paymentData"];
-    
+
+    NSString *paymentType = @"";
+    switch (payment.token.paymentMethod.type) {
+        case PKPaymentMethodTypeDebit:
+            paymentType = @"debit";
+            break;
+        case PKPaymentMethodTypeCredit:
+            paymentType = @"credit";
+            break;
+        case PKPaymentMethodTypeStore:
+            paymentType = @"store";
+            break;
+        case PKPaymentMethodTypePrepaid:
+            paymentType = @"prepaid";
+            break;
+        default:
+            paymentType = @"unknown";
+            break;
+    }
+
+    NSDictionary *paymentMethodDictionary = @{@"network": payment.token.paymentMethod.network, @"type": paymentType, @"displayName": payment.token.paymentMethod.displayName};
+    [paymentResponse setObject:paymentMethodDictionary forKey:@"paymentMethod"];
+
     if (token) {
         [paymentResponse setObject:token forKey:@"paymentToken"];
     }

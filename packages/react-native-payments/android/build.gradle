@@ -1,14 +1,20 @@
 apply plugin: 'com.android.library'
 
+def getExtOrDefault(name) {
+  return rootProject.ext.has(name) ? rootProject.ext.get(name) : project.properties['ReactNativePayments_' + name]
+}
+
+def getExtOrIntegerDefault(name) {
+  return rootProject.ext.has(name) ? rootProject.ext.get(name) : (project.properties['ReactNativePayments_' + name]).toInteger()
+}
+
 android {
-    compileSdkVersion 23
-    buildToolsVersion "23.0.1"
+    compileSdkVersion getExtOrIntegerDefault('compileSdkVersion')
+    buildToolsVersion getExtOrDefault('buildToolsVersion')
 
     defaultConfig {
-        minSdkVersion 16
-        targetSdkVersion 22
-        versionCode 1
-        versionName "1.0"
+        minSdkVersion getExtOrIntegerDefault('minSdkVersion')
+        targetSdkVersion getExtOrIntegerDefault('targetSdkVersion')
         ndk {
             abiFilters "armeabi-v7a", "x86"
         }

@@ -88,12 +88,14 @@ export type PaymentComplete = 'fail' | 'success' | 'unknown';
 
 export type PaymentDetailsIOS = {
   paymentData: ?Object,
+  paymentMethod: Object,
   paymentToken?: string,
   transactionIdentifier: string,
 };
 
 export type PaymentDetailsIOSRaw = {
   paymentData: string,
+  paymentMethod: Object,
   paymentToken?: string,
   transactionIdentifier: string,
 };
